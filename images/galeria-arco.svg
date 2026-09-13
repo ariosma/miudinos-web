@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Ilustración de la biblioteca del arco">
+  <rect width="800" height="600" fill="#8ba888"/>
+  <rect width="800" height="600" fill="#93b090" opacity=".35"/>
+  <!-- Suelo -->
+  <rect y="470" width="800" height="130" fill="#d99a6c"/>
+  <g stroke="#c98a5a" stroke-width="4">
+    <line x1="0" y1="530" x2="800" y2="530"/>
+    <line x1="160" y1="470" x2="160" y2="530"/><line x1="480" y1="470" x2="480" y2="530"/>
+    <line x1="320" y1="530" x2="320" y2="600"/><line x1="640" y1="530" x2="640" y2="600"/>
+  </g>
+  <!-- Arco central -->
+  <path d="M230 470 L230 240 A170 170 0 0 1 570 240 L570 470 Z" fill="#f7efe0"/>
+  <path d="M230 470 L230 240 A170 170 0 0 1 570 240 L570 470" fill="none" stroke="#5e7d5b" stroke-width="14"/>
+  <!-- Librería dentro del arco -->
+  <g>
+    <rect x="268" y="240" width="264" height="230" rx="10" fill="#d9b48c"/>
+    <rect x="282" y="256" width="236" height="58" rx="6" fill="#f7efe0"/>
+    <rect x="282" y="326" width="236" height="58" rx="6" fill="#f7efe0"/>
+    <rect x="282" y="396" width="236" height="58" rx="6" fill="#f7efe0"/>
+    <!-- libros fila 1 -->
+    <rect x="292" y="266" width="20" height="40" rx="3" fill="#e0704f"/>
+    <rect x="316" y="262" width="20" height="44" rx="3" fill="#f2b950" transform="rotate(-4 316 262)"/>
+    <rect x="342" y="266" width="20" height="40" rx="3" fill="#5e7d5b"/>
+    <rect x="366" y="262" width="20" height="44" rx="3" fill="#f2c9bb"/>
+    <rect x="392" y="266" width="20" height="40" rx="3" fill="#8ba888"/>
+    <rect x="416" y="264" width="20" height="42" rx="3" fill="#c55a3b"/>
+    <rect x="440" y="266" width="20" height="40" rx="3" fill="#f2b950" transform="rotate(5 440 266)"/>
+    <rect x="470" y="272" width="40" height="30" rx="4" fill="#b98d68"/>
+    <!-- libros fila 2 -->
+    <rect x="292" y="336" width="20" height="40" rx="3" fill="#8ba888"/>
+    <rect x="316" y="334" width="20" height="42" rx="3" fill="#f2c9bb"/>
+    <rect x="340" y="338" width="20" height="38" rx="3" fill="#e0704f" transform="rotate(-5 340 338)"/>
+    <rect x="368" y="342" width="52" height="30" rx="4" fill="#5e7d5b"/>
+    <rect x="430" y="336" width="20" height="40" rx="3" fill="#f2b950"/>
+    <rect x="454" y="334" width="20" height="42" rx="3" fill="#c55a3b"/>
+    <rect x="478" y="338" width="20" height="38" rx="3" fill="#8ba888"/>
+    <!-- materiales fila 3 -->
+    <rect x="292" y="420" width="34" height="26" rx="4" fill="#e0704f"/>
+    <rect x="334" y="414" width="34" height="32" rx="4" fill="#f2c9bb"/>
+    <circle cx="408" cy="432" r="17" fill="#f2b950"/>
+    <rect x="440" y="416" width="30" height="30" rx="4" fill="#8ba888"/>
+    <rect x="478" y="412" width="30" height="34" rx="4" fill="#5e7d5b"/>
+  </g>
+  <!-- Cojines delante del arco -->
+  <ellipse cx="400" cy="530" rx="200" ry="26" fill="#b57b52" opacity=".4"/>
+  <rect x="300" y="478" width="120" height="46" rx="23" fill="#c55a3b" transform="rotate(-5 300 478)"/>
+  <rect x="400" y="486" width="120" height="46" rx="23" fill="#f2b950" transform="rotate(6 400 486)"/>
+  <ellipse cx="470" cy="500" rx="46" ry="40" fill="#9db48a"/>
+  <!-- Planta colgante del arco -->
+  <line x1="400" y1="118" x2="400" y2="150" stroke="#5e7d5b" stroke-width="5"/>
+  <path d="M376 150 h48 l-7 26 h-34 Z" fill="#c55a3b"/>
+  <path d="M382 176 q-8 30 -22 40 M400 176 q0 36 -6 50 M418 176 q8 26 22 36" stroke="#5e7d5b" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Mariposas -->
+  <g fill="#f2c9bb">
+    <path d="M120 140 q-18 -16 -8 -32 q16 2 16 20 q0 -18 16 -20 q10 16 -8 32 l-8 10 Z"/>
+    <path d="M660 200 q-14 -13 -6 -26 q13 2 13 16 q0 -15 13 -16 q8 13 -6 26 l-7 8 Z"/>
+  </g>
+  <!-- Estrella -->
+  <path d="M110 320 l10 24 26 3 -19 17 5 26 -22 -13 -22 13 5 -26 -19 -17 26 -3 Z" fill="#f2b950"/>
+</svg>

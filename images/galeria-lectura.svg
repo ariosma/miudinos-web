@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Ilustración del rincón de lectura">
+  <rect width="800" height="420" fill="#f5eddc"/>
+  <rect y="420" width="800" height="180" fill="#d99a6c"/>
+  <g stroke="#c98a5a" stroke-width="4">
+    <line x1="0" y1="480" x2="800" y2="480"/><line x1="0" y1="540" x2="800" y2="540"/>
+    <line x1="200" y1="420" x2="200" y2="480"/><line x1="520" y1="420" x2="520" y2="480"/>
+    <line x1="100" y1="480" x2="100" y2="540"/><line x1="400" y1="480" x2="400" y2="540"/><line x1="700" y1="480" x2="700" y2="540"/>
+  </g>
+  <!-- Alfombra redonda de fibras -->
+  <ellipse cx="400" cy="470" rx="300" ry="110" fill="#e4cf9f"/>
+  <ellipse cx="400" cy="470" rx="260" ry="92" fill="none" stroke="#d4b87e" stroke-width="10"/>
+  <ellipse cx="400" cy="470" rx="200" ry="66" fill="none" stroke="#d4b87e" stroke-width="8"/>
+  <ellipse cx="400" cy="470" rx="140" ry="44" fill="none" stroke="#d4b87e" stroke-width="6"/>
+  <!-- Librería frontal baja -->
+  <g>
+    <rect x="60" y="210" width="200" height="250" rx="10" fill="#d9b48c"/>
+    <g>
+      <rect x="80" y="230" width="24" height="70" rx="3" fill="#e0704f" transform="rotate(-6 80 230)"/>
+      <rect x="110" y="226" width="24" height="74" rx="3" fill="#8ba888"/>
+      <rect x="140" y="230" width="24" height="70" rx="3" fill="#f2b950" transform="rotate(4 140 230)"/>
+      <rect x="170" y="226" width="24" height="74" rx="3" fill="#5e7d5b"/>
+      <rect x="200" y="232" width="24" height="68" rx="3" fill="#f2c9bb"/>
+    </g>
+    <rect x="74" y="310" width="172" height="8" fill="#b98d68"/>
+    <g>
+      <rect x="80" y="330" width="24" height="70" rx="3" fill="#f2b950"/>
+      <rect x="110" y="326" width="24" height="74" rx="3" fill="#e0704f"/>
+      <rect x="140" y="332" width="24" height="68" rx="3" fill="#8ba888" transform="rotate(-4 140 332)"/>
+      <rect x="170" y="326" width="24" height="74" rx="3" fill="#f2c9bb"/>
+      <rect x="200" y="330" width="24" height="70" rx="3" fill="#5e7d5b"/>
+    </g>
+    <rect x="74" y="410" width="172" height="8" fill="#b98d68"/>
+    <rect x="80" y="428" width="60" height="20" rx="4" fill="#e0704f"/>
+    <rect x="150" y="428" width="80" height="20" rx="4" fill="#8ba888"/>
+  </g>
+  <!-- Cuento abierto en el suelo -->
+  <g transform="translate(360 470)">
+    <path d="M0 0 q-60 -18 -110 0 v46 q50 -16 110 0 q60 -16 110 0 v-46 q-50 -18 -110 0 Z" fill="#fffdf8" stroke="#d9b48c" stroke-width="4"/>
+    <path d="M0 0 v46" stroke="#d9b48c" stroke-width="4"/>
+    <circle cx="-58" cy="16" r="12" fill="#e0704f"/>
+    <rect x="22" y="8" width="66" height="8" rx="4" fill="#c9c2b4"/>
+    <rect x="22" y="24" width="50" height="8" rx="4" fill="#c9c2b4"/>
+  </g>
+  <!-- Cojines -->
+  <rect x="520" y="420" width="130" height="54" rx="26" fill="#c55a3b" transform="rotate(-6 520 420)"/>
+  <rect x="590" y="440" width="130" height="54" rx="26" fill="#8ba888" transform="rotate(7 590 440)"/>
+  <!-- Lámpara colgante -->
+  <line x1="620" y1="0" x2="620" y2="90" stroke="#6b4a2f" stroke-width="5"/>
+  <path d="M588 90 h64 l-14 42 h-36 Z" fill="#f2b950"/>
+  <ellipse cx="620" cy="140" rx="34" ry="10" fill="#f9d98c" opacity=".7"/>
+  <!-- Cuadro de hojas -->
+  <rect x="300" y="90" width="130" height="100" rx="8" fill="#fffdf8" stroke="#d9b48c" stroke-width="6"/>
+  <path d="M365 165 v-45 m0 15 q-20 -8 -26 -28 q24 4 26 28 q2 -24 26 -28 q-6 20 -26 28" stroke="#8ba888" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <!-- Planta colgante -->
+  <g transform="translate(80 60)">
+    <path d="M0 0 h60 l-8 34 h-44 Z" fill="#c55a3b"/>
+    <path d="M8 34 q-6 40 -22 52 M30 34 q0 48 -8 66 M52 34 q8 36 24 48" stroke="#5e7d5b" stroke-width="7" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>
