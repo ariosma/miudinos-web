@@ -1,6 +1,7 @@
 /* ==========================================================================
    Miudiños · Centro de Ocio Montessori — Lógica de la aplicación
-   Web 100% local: las reservas se guardan en localStorage.
+   Las reservas y bonos se guardan en Supabase (PostgreSQL) y se cachean
+   en localStorage para que la web siga funcionando sin conexión.
    El paso de pago es una simulación (no se realiza ningún cargo).
    ========================================================================== */
 'use strict';
@@ -89,6 +90,82 @@ const SIBLING_DISCOUNT = 0.20; // 20% a partir del segundo niño
 const STORAGE_KEY = 'miudinos_bookings';
 const VOUCHER_KEY = 'miudinos_vouchers';
 const VOUCHER_SESSION_PRICE = 8; // precio de referencia de sesión de ludoteca
+
+/* ------------------------- Supabase (backend) --------------------------- */
+
+const SUPABASE_URL = 'https://xxlilxbnysrhrxkneefz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_zp6lcTsO7aW8k9_DzL5-Qw_5va1v3Tq';
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// Mapean filas de la BD (snake_case) a los objetos que usa la app (camelCase)
+function dbToBooking(r) {
+  return {
+    code: r.code, createdAt: r.created_at, status: r.status, activity: r.activity,
+    date: r.date, slot: r.slot, children: r.children, ages: r.ages || [],
+    childName: r.child_name, name: r.name, email: r.email, phone: r.phone,
+    notes: r.notes, voucher: r.voucher, total: Number(r.total)
+  };
+}
+
+function dbToVoucher(r) {
+  return {
+    code: r.code, type: r.type, sessionsTotal: r.sessions_total, sessionsLeft: r.sessions_left,
+    price: Number(r.price), forName: r.for_name, name: r.name, email: r.email,
+    phone: r.phone, createdAt: r.created_at
+  };
+}
+
+// Descarga reservas y bonos de Supabase y refresca la caché local
+async function syncFromSupabase() {
+  if (!sb) return;
+  try {
+    const [{ data: bk, error: e1 }, { data: vo, error: e2 }] = await Promise.all([
+      sb.from('bookings').select('*').order('created_at', { ascending: true }),
+      sb.from('vouchers').select('*').order('created_at', { ascending: true })
+    ]);
+    if (e1 || e2) throw (e1 || e2);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(bk.map(dbToBooking)));
+    localStorage.setItem(VOUCHER_KEY, JSON.stringify(vo.map(dbToVoucher)));
+    renderMyBookings();
+    renderMyVouchers();
+  } catch (err) {
+    console.warn('Supabase no disponible, usando caché local:', err);
+  }
+}
+
+// Escrituras remotas en segundo plano (la UI ya quedó guardada en local)
+function remoteInsertBooking(r) {
+  if (!sb) return;
+  sb.from('bookings').insert({
+    code: r.code, status: r.status, activity: r.activity, date: r.date, slot: r.slot,
+    children: r.children, ages: r.ages, child_name: r.childName, name: r.name,
+    email: r.email, phone: r.phone, notes: r.notes, voucher: r.voucher, total: r.total
+  }).then(({ error }) => {
+    if (error) { console.warn(error); showToast('⚠️ No se pudo guardar en la nube'); }
+  });
+}
+
+function remoteCancelBooking(code) {
+  if (!sb) return;
+  sb.from('bookings').update({ status: 'cancelada' }).eq('code', code)
+    .then(({ error }) => { if (error) console.warn(error); });
+}
+
+function remoteInsertVoucher(v) {
+  if (!sb) return;
+  sb.from('vouchers').insert({
+    code: v.code, type: v.type, sessions_total: v.sessionsTotal, sessions_left: v.sessionsLeft,
+    price: v.price, for_name: v.forName, name: v.name, email: v.email, phone: v.phone
+  }).then(({ error }) => {
+    if (error) { console.warn(error); showToast('⚠️ No se pudo guardar en la nube'); }
+  });
+}
+
+function remoteUpdateVoucherSessions(code, sessionsLeft) {
+  if (!sb) return;
+  sb.from('vouchers').update({ sessions_left: sessionsLeft }).eq('code', code)
+    .then(({ error }) => { if (error) console.warn(error); });
+}
 
 /* --------------------------- Estado de reserva -------------------------- */
 
@@ -555,6 +632,7 @@ function bindVoucherForm() {
     const list = loadVouchers();
     list.push(record);
     saveVouchers(list);
+    remoteInsertVoucher(record);
 
     $('#voucherCode').textContent = record.code;
     $('#voucherDoneSummary').innerHTML = `
@@ -681,6 +759,7 @@ function confirmBooking() {
   const list = loadBookings();
   list.push(record);
   saveBookings(list);
+  remoteInsertBooking(record);
 
   // Descontar sesiones del bono
   if (booking.voucher) {
@@ -689,6 +768,7 @@ function confirmBooking() {
     if (v) {
       v.sessionsLeft = Math.max(0, v.sessionsLeft - booking.children);
       saveVouchers(vouchers);
+      remoteUpdateVoucherSessions(v.code, v.sessionsLeft);
     }
   }
 
@@ -775,6 +855,7 @@ function cancelBooking(code) {
   if (!confirm(`¿Cancelar la reserva ${code}?\nSe liberarán las plazas sin coste.`)) return;
   rec.status = 'cancelada';
   saveBookings(list);
+  remoteCancelBooking(code);
   renderMyBookings();
   showToast(`Reserva ${code} cancelada`);
 }
@@ -890,6 +971,7 @@ function init() {
   bindVoucherForm();
   bindVoucherApply();
   renderMyVouchers();
+  syncFromSupabase(); // refresca caché local con los datos de la nube
 
   // Fecha mínima: hoy. Máxima: +90 días.
   const dateInput = $('#bkDate');
