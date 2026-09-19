@@ -681,3 +681,21 @@ p { margin: 0 0 1em; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- Mapa de ubicación ---------- */
+.map-wrap {
+  margin: 1.6rem 0 1rem; border-radius: var(--radius-lg); overflow: hidden;
+  border: 5px solid var(--paper); box-shadow: var(--shadow-md);
+  aspect-ratio: 16 / 10; background: var(--cream-2);
+}
+.map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+.map-link { text-decoration: none; }
+
+/* ---------- Logo del pie ---------- */
+.brand-footer-logo { display: inline-block; margin-bottom: 1rem; }
+.brand-footer-logo img { width: 200px; height: auto; }
+
+@media (max-width: 760px) {
+  .map-wrap { aspect-ratio: 4 / 3; }
+  .brand-footer-logo img { width: 170px; }
+}
