@@ -1,42 +1,42 @@
-/* Miudiños: solicitudes por WhatsApp; no pagos ni reservas automáticas. */
+/* Miudiños: solicitudes por WhatsApp; sen pagos nin reservas automáticas. */
 'use strict';
 
 const PHONE = '34665369101';
 const ACTIVITIES = [
   {
     id: 'bebeteca', emoji: '🪁', name: 'Bebeteca',
-    tagline: 'Primeros descubrimientos con un adulto',
-    desc: 'Por las mañanas, bebés de 0 a 2 años exploran materiales, texturas y movimiento a su ritmo, siempre acompañados por un adulto. Un rato de calma para compartir y relajarse juntos.',
-    minAge: 0, maxAge: 2, ages: '0–2 años · con acompañante',
-    duration: '90 min · mañanas', price: 7, priceUnit: 'bebé y acompañante',
-    features: ['Una persona adulta acompaña al peque', 'Juego sensorial y movimiento', 'Sesión de 90 minutos'],
+    tagline: 'Primeiros descubrimentos cunha persoa adulta',
+    desc: 'Polas mañás, os bebés de 0 a 2 anos exploran materiais, texturas e movemento ao seu ritmo, sempre acompañados por unha persoa adulta. Un intre de calma para compartir e relaxarse xuntos.',
+    minAge: 0, maxAge: 2, ages: '0–2 anos · cun acompañante',
+    duration: '90 min · mañás', price: 7, priceUnit: 'bebé e acompañante',
+    features: ['Unha persoa adulta acompaña ao bebé', 'Xogo sensorial e movemento', 'Sesión de 90 minutos'],
     days: [1, 2, 3, 4, 5], slots: ['10:00', '11:30']
   },
   {
-    id: 'talleres', emoji: '🎨', name: 'Tardes de juego y talleres',
-    tagline: 'Juego libre y propuestas para crear',
-    desc: 'Por las tardes combinamos juego libre con propuestas de arte y experimentación para peques de 3 a 8 años. Consulta qué propuesta toca cada semana.',
-    minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '90 min · tardes', price: 10, priceUnit: 'niño/a y tarde',
-    features: ['Juego libre y talleres', 'Sesión de 90 minutos', 'Materiales incluidos'],
+    id: 'talleres', emoji: '🎨', name: 'Tardes de xogo e obradoiros',
+    tagline: 'Xogo libre e propostas para crear',
+    desc: 'Polas tardes combinamos xogo libre con propostas de arte e experimentación para peques de 3 a 8 anos. Consulta que proposta toca cada semana.',
+    minAge: 3, maxAge: 8, ages: '3–8 anos',
+    duration: '90 min · tardes', price: 10, priceUnit: 'peque e tarde',
+    features: ['Xogo libre e obradoiros', 'Sesión de 90 minutos', 'Materiais incluídos'],
     days: [1, 2, 3, 4, 5], slots: ['16:30', '18:30'], featured: true
   },
   {
     id: 'campamentos', emoji: '🏕️', name: 'Campamentos',
-    tagline: 'Mañanas de vacaciones para explorar',
-    desc: 'Propuesta de mañanas durante vacaciones. Pregunta por fechas, programa y plazas disponibles.',
-    minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '5 mañanas · 9:00–13:00', price: 100, priceUnit: 'niño/a y semana',
-    features: ['Cinco mañanas laborables', 'Horario propuesto: 9:00–13:00', 'Fechas a confirmar'],
+    tagline: 'Mañás de vacacións para explorar',
+    desc: 'Proposta de mañás durante as vacacións. Pregunta polas datas, o programa e as prazas dispoñibles.',
+    minAge: 3, maxAge: 8, ages: '3–8 anos',
+    duration: '5 mañás · 9:00–13:00', price: 100, priceUnit: 'peque e semana',
+    features: ['Cinco mañás laborables', 'Horario proposto: 9:00–13:00', 'Datas por confirmar'],
     days: [1, 2, 3, 4, 5], slots: ['09:00']
   },
   {
-    id: 'cumpleanos', emoji: '🎂', name: 'Cumpleaños de los viernes',
-    tagline: 'Una celebración a su manera',
-    desc: 'Celebraciones para peques de 3 a 8 años, solo los viernes. Cuéntanos cuántos vendréis y prepararemos un presupuesto personalizado.',
-    minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: 'Viernes · horario a convenir', price: null, priceUnit: '',
-    features: ['Solo los viernes', 'Propuesta según grupo', 'Presupuesto antes de confirmar'],
+    id: 'cumpleanos', emoji: '🎂', name: 'Aniversarios dos venres',
+    tagline: 'Unha celebración á súa maneira',
+    desc: 'Celebracións para peques de 3 a 8 anos, só os venres. Cóntanos cantos viredes e prepararemos un orzamento personalizado.',
+    minAge: 3, maxAge: 8, ages: '3–8 anos',
+    duration: 'Venres · horario por acordar', price: null, priceUnit: '',
+    features: ['Só os venres', 'Proposta segundo o grupo', 'Orzamento antes de confirmar'],
     days: [5], slots: ['16:30'], maxChildren: 20
   }
 ];
@@ -65,7 +65,7 @@ function activity() {
 }
 
 function euros(value) {
-  return value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+  return value.toLocaleString('gl-ES', { style: 'currency', currency: 'EUR' });
 }
 
 function whatsappUrl(message) {
@@ -105,8 +105,8 @@ function renderActivities() {
     desc.textContent = item.desc;
     const price = document.createElement('p');
     price.className = 'activity-price';
-    price.textContent = item.price === null ? 'Precio a consultar' : `${euros(item.price)} / ${item.priceUnit}`;
-    body.append(heading, meta, desc, price, makeButton('Solicitar plaza', 'btn btn-ghost btn-sm', () => startBooking(item.id)));
+    price.textContent = item.price === null ? 'Prezo por consultar' : `${euros(item.price)} / ${item.priceUnit}`;
+    body.append(heading, meta, desc, price, makeButton('Solicitar praza', 'btn btn-ghost btn-sm', () => startBooking(item.id)));
     card.append(icon, body);
     grid.append(card);
   }
@@ -122,17 +122,17 @@ function renderPricing() {
     heading.textContent = `${item.emoji} ${item.name}`;
     const price = document.createElement('p');
     price.className = 'price-amount';
-    price.textContent = item.price === null ? 'A consultar' : euros(item.price);
+    price.textContent = item.price === null ? 'Por consultar' : euros(item.price);
     const unit = document.createElement('p');
     unit.className = 'activity-meta';
-    unit.textContent = item.price === null ? 'Presupuesto según grupo' : `Por ${item.priceUnit} · ${item.duration}`;
+    unit.textContent = item.price === null ? 'Orzamento segundo o grupo' : `Por ${item.priceUnit} · ${item.duration}`;
     const features = document.createElement('ul');
     for (const feature of item.features) {
       const li = document.createElement('li');
       li.textContent = feature;
       features.append(li);
     }
-    card.append(heading, price, unit, features, makeButton('Solicitar plaza', 'btn btn-ghost', () => startBooking(item.id)));
+    card.append(heading, price, unit, features, makeButton('Solicitar praza', 'btn btn-ghost', () => startBooking(item.id)));
     grid.append(card);
   }
 }
@@ -147,12 +147,12 @@ function renderVouchers() {
     heading.textContent = `🎟️ Bono de ${voucher.days} días`;
     const price = document.createElement('p');
     price.className = 'voucher-sessions';
-    price.textContent = 'Precio a consultar';
+    price.textContent = 'Prezo por consultar';
     const info = document.createElement('p');
-    info.textContent = 'Válido para bebeteca y juego y talleres. Consulta disponibilidad y condiciones con el centro.';
+    info.textContent = 'Válido para bebeteca e tardes de xogo e obradoiros. Consulta a dispoñibilidade e as condicións co centro.';
     const link = document.createElement('a');
     link.className = 'btn btn-ghost';
-    link.href = whatsappUrl(`Hola, quisiera consultar el bono de ${voucher.days} días para bebeteca y juego y talleres. ¿Podéis decirme el precio y las condiciones?`);
+    link.href = whatsappUrl(`Ola, gustaríame consultar o bono de ${voucher.days} días para bebeteca e tardes de xogo e obradoiros. Poderiades dicirme o prezo e as condicións?`);
     link.target = '_blank';
     link.rel = 'noopener';
     link.textContent = 'Consultar bono';
@@ -165,7 +165,7 @@ function renderActivityPicker() {
   const picker = $('#activityPicker');
   picker.replaceChildren();
   for (const item of ACTIVITIES) {
-    const button = makeButton(`${item.emoji}  ${item.name} · ${item.ages} · ${item.price === null ? 'A consultar' : euros(item.price)}`, 'pick-card', () => selectActivity(item.id));
+    const button = makeButton(`${item.emoji}  ${item.name} · ${item.ages} · ${item.price === null ? 'Por consultar' : euros(item.price)}`, 'pick-card', () => selectActivity(item.id));
     button.dataset.activity = item.id;
     button.setAttribute('aria-pressed', 'false');
     picker.append(button);
@@ -223,7 +223,7 @@ function renderSlots() {
   if (!slots.length) {
     const hint = document.createElement('p');
     hint.className = 'hint';
-    hint.textContent = value && activity() ? 'Solo abrimos de lunes a viernes. Para cumpleaños, elige un viernes.' : 'Elige actividad y fecha para ver los horarios propuestos.';
+    hint.textContent = value && activity() ? 'Só abrimos de luns a venres. Para aniversarios, escolle un venres.' : 'Escolle actividade e data para ver os horarios propostos.';
     picker.append(hint);
     return;
   }
@@ -327,21 +327,25 @@ function summaryLine(container, label, value) {
   container.append(line);
 }
 
+function agesText() {
+  return booking.ages.map(age => `${age} ${age === 1 ? 'ano' : 'anos'}`).join(', ');
+}
+
 function renderSummary() {
   const box = $('#bookingSummary');
   box.replaceChildren();
   const heading = document.createElement('h3');
-  heading.textContent = 'Revisa tu solicitud';
+  heading.textContent = 'Revisa a túa solicitude';
   box.append(heading);
-  summaryLine(box, 'Actividad', activity().name);
-  summaryLine(box, 'Fecha', new Date(`${booking.date}T12:00:00`).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }));
-  summaryLine(box, 'Hora propuesta', booking.slot);
-  summaryLine(box, 'Peques', `${booking.childName}${booking.children > 1 ? ` y ${booking.children - 1} más` : ''} (${booking.ages.join(', ')} años)`);
+  summaryLine(box, 'Actividade', activity().name);
+  summaryLine(box, 'Data', new Date(`${booking.date}T12:00:00`).toLocaleDateString('gl-ES', { weekday: 'long', day: 'numeric', month: 'long' }));
+  summaryLine(box, 'Hora proposta', booking.slot);
+  summaryLine(box, 'Peques', `${booking.childName}${booking.children > 1 ? ` e ${booking.children - 1} máis` : ''} (${agesText()})`);
   summaryLine(box, 'Contacto', `${booking.name} · ${booking.phone}`);
   if (activity().price !== null) {
-    summaryLine(box, 'Precio orientativo', `${euros(activity().price)} ${activity().priceUnit === 'niño/a y semana' ? 'por peque y semana' : 'por peque'}`);
+    summaryLine(box, 'Prezo orientativo', `${euros(activity().price)} ${activity().id === 'campamentos' ? 'por peque e semana' : 'por peque'}`);
   } else {
-    summaryLine(box, 'Precio', 'Presupuesto a consultar');
+    summaryLine(box, 'Prezo', 'Orzamento por consultar');
   }
 }
 
@@ -361,12 +365,12 @@ function goToStep(step) {
 
 function sendRequest() {
   const lines = [
-    'Hola, quisiera solicitar una plaza en Miudiños (pendiente de vuestra confirmación):',
-    `Actividad: ${activity().name}`,
-    `Fecha: ${booking.date}`,
-    `Hora propuesta: ${booking.slot}`,
-    `Peques: ${booking.children}; edades: ${booking.ages.join(', ')} años`,
-    `Nombre del peque: ${booking.childName}`,
+    'Ola, gustaríame solicitar unha praza en Miudiños (pendente da vosa confirmación):',
+    `Actividade: ${activity().name}`,
+    `Data: ${booking.date}`,
+    `Hora proposta: ${booking.slot}`,
+    `Peques: ${booking.children}; idades: ${agesText()}`,
+    `Nome do peque: ${booking.childName}`,
     `Contacto: ${booking.name} · ${booking.phone}`,
     ...(booking.notes ? [`Comentario: ${booking.notes}`] : [])
   ];
@@ -379,7 +383,7 @@ function bindNav() {
   toggle.addEventListener('click', () => {
     const open = nav.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    toggle.setAttribute('aria-label', open ? 'Pechar o menú' : 'Abrir o menú');
   });
   $$('#mainNav a').forEach(link => link.addEventListener('click', () => {
     nav.classList.remove('is-open');
@@ -393,10 +397,10 @@ function bindContactForm() {
     const name = $('#ctName').value.trim();
     const message = $('#ctMsg').value.trim();
     if (name.length < 2 || name.length > 100 || message.length < 5 || message.length > 1000) {
-      toast('Revisa tu nombre y mensaje antes de continuar.');
+      toast('Revisa o teu nome e a mensaxe antes de continuar.');
       return;
     }
-    openWhatsapp(`Hola, soy ${name}. ${message}`);
+    openWhatsapp(`Ola, son ${name}. ${message}`);
   });
 }
 
@@ -445,7 +449,7 @@ function init() {
     localStorage.removeItem('miudinos_bookings');
     localStorage.removeItem('miudinos_vouchers');
   } catch (error) {
-    console.warn('No se pudo limpiar la caché de reservas de la versión anterior.', error);
+    console.warn('Non foi posible limpar a caché das reservas da versión anterior.', error);
   }
   renderActivities();
   renderPricing();
@@ -476,7 +480,7 @@ function init() {
   }));
   $('#btnNext').addEventListener('click', () => {
     if (!validateStep(currentStep)) {
-      toast('Revisa los campos marcados.');
+      toast('Revisa os campos marcados.');
       return;
     }
     if (currentStep === 4) sendRequest();

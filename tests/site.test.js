@@ -78,3 +78,25 @@ test('daily passes apply to both activities without an unconfirmed price', () =>
   assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.days)')), [5, 10]);
   assert.equal(run('VOUCHERS.every(v => !("price" in v) && !("activityId" in v))'), true);
 });
+
+test('activity labels and WhatsApp booking request are in Galician', () => {
+  const run = createApp();
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'talleres').name"), 'Tardes de xogo e obradoiros');
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'cumpleanos').name"), 'Aniversarios dos venres');
+  assert.equal(run('euros(7)'), new Intl.NumberFormat('gl-ES', { style: 'currency', currency: 'EUR' }).format(7));
+  run("Object.assign(booking, { activity: 'bebeteca', date: '2026-09-28', slot: '10:00', children: 1, ages: [1], childName: 'Noa', name: 'Ana', phone: '665369101', notes: '' })");
+  run('sendRequest()');
+  const url = run('window.location.href');
+  assert.equal(url.startsWith('https://wa.me/34665369101?text='), true);
+  const message = new URL(url).searchParams.get('text');
+  assert.match(message, /^Ola, gustaríame solicitar unha praza/);
+  assert.match(message, /Actividade: Bebeteca\nData: 2026-09-28\nHora proposta: 10:00/);
+  assert.match(message, /idades: 1 ano/);
+});
+
+test('static page sets Galician language and booking labels', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.match(html, /<html lang="gl">/);
+  assert.match(html, /<span class="step-label">Actividade<\/span>/);
+  assert.match(html, /maps\?q=42\.9564872,-9\.1886793&hl=gl/);
+});
