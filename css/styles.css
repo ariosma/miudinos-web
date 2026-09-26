@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Miudiños · Centro de Ocio Montessori
+   Miudiños · Centro de ocio infantil
    Paleta cálida: crema, terracota, salvia, madera
    ========================================================================== */
 
@@ -139,22 +139,6 @@ p { margin: 0 0 1em; }
 
 .hero-inner { position: relative; z-index: 2; padding: 4.8rem 0 3rem; }
 
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: .55em;
-  background: var(--paper); border: 1px solid rgba(185, 141, 104, .35);
-  border-radius: 999px; padding: .5em 1.1em; box-shadow: var(--shadow-sm);
-  margin-bottom: 1.4rem;
-}
-.hero-eyebrow-dot {
-  width: 9px; height: 9px; border-radius: 50%; background: var(--sage);
-  box-shadow: 0 0 0 0 rgba(139, 168, 136, .5); animation: pulse 2.4s ease-out infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(139, 168, 136, .55); }
-  70% { box-shadow: 0 0 0 10px rgba(139, 168, 136, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(139, 168, 136, 0); }
-}
-
 .hero-title {
   font-family: var(--font-display); font-weight: 600;
   font-size: clamp(2.3rem, 6vw, 4.3rem); letter-spacing: 0;
@@ -257,7 +241,7 @@ p { margin: 0 0 1em; }
 }
 .pill-card p { color: var(--ink-soft); font-size: .95rem; margin: 0; }
 
-/* ---------- Literatura del método ---------- */
+/* ---------- Nuestra filosofía ---------- */
 .method-story {
   display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
   margin-top: 3.5rem; background: var(--paper);
