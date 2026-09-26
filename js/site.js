@@ -8,7 +8,7 @@ const ACTIVITIES = [
     tagline: 'Primeros descubrimientos con un adulto',
     desc: 'Por las mañanas, bebés de 0 a 2 años exploran materiales, texturas y movimiento a su ritmo, siempre acompañados por un adulto. Un rato de calma para compartir y relajarse juntos.',
     minAge: 0, maxAge: 2, ages: '0–2 años · con acompañante',
-    duration: '90 min · mañanas', price: 10, priceUnit: 'bebé y acompañante',
+    duration: '90 min · mañanas', price: 7, priceUnit: 'bebé y acompañante',
     features: ['Una persona adulta acompaña al peque', 'Juego sensorial y movimiento', 'Sesión de 90 minutos'],
     days: [1, 2, 3, 4, 5], slots: ['10:00', '11:30']
   },
@@ -17,7 +17,7 @@ const ACTIVITIES = [
     tagline: 'Juego libre y propuestas para crear',
     desc: 'Por las tardes combinamos juego libre con propuestas de arte y experimentación para peques de 3 a 8 años. Consulta qué propuesta toca cada semana.',
     minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '90 min · tardes', price: 16, priceUnit: 'niño/a y tarde',
+    duration: '90 min · tardes', price: 10, priceUnit: 'niño/a y tarde',
     features: ['Juego libre y talleres', 'Sesión de 90 minutos', 'Materiales incluidos'],
     days: [1, 2, 3, 4, 5], slots: ['16:30', '18:30'], featured: true
   },
@@ -26,7 +26,7 @@ const ACTIVITIES = [
     tagline: 'Mañanas de vacaciones para explorar',
     desc: 'Propuesta de mañanas durante vacaciones. Pregunta por fechas, programa y plazas disponibles.',
     minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '5 mañanas · 9:00–13:00', price: 110, priceUnit: 'niño/a y semana',
+    duration: '5 mañanas · 9:00–13:00', price: 100, priceUnit: 'niño/a y semana',
     features: ['Cinco mañanas laborables', 'Horario propuesto: 9:00–13:00', 'Fechas a confirmar'],
     days: [1, 2, 3, 4, 5], slots: ['09:00']
   },
@@ -41,10 +41,10 @@ const ACTIVITIES = [
   }
 ];
 const VOUCHERS = [
-  { activityId: 'bebeteca', sessions: 5, price: 45 },
-  { activityId: 'bebeteca', sessions: 10, price: 85 },
-  { activityId: 'talleres', sessions: 5, price: 75 },
-  { activityId: 'talleres', sessions: 10, price: 140 }
+  { activityId: 'bebeteca', sessions: 5, price: 32 },
+  { activityId: 'bebeteca', sessions: 10, price: 60 },
+  { activityId: 'talleres', sessions: 5, price: 45 },
+  { activityId: 'talleres', sessions: 10, price: 85 }
 ];
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];

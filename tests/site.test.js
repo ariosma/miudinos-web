@@ -66,19 +66,19 @@ test('invalid dates are rejected and WhatsApp requests encode message text', () 
 test('weekday afternoons combine play and workshops without a separate ludoteca', () => {
   const run = createApp();
   assert.equal(run("ACTIVITIES.some(item => item.id === 'ludoteca')"), false);
-  assert.equal(run("ACTIVITIES.find(item => item.id === 'talleres').price"), 16);
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'talleres').price"), 10);
   run("booking.activity = 'talleres'");
   assert.deepEqual(Array.from(run("slotsForDate('2026-09-28')")), ['16:30', '18:30']);
 });
 
-test('new prices and separate vouchers have a positive saving for their activity', () => {
+test('agreed prices and separate vouchers have a positive saving for their activity', () => {
   const run = createApp();
-  assert.equal(run("ACTIVITIES.find(item => item.id === 'bebeteca').price"), 10);
-  assert.equal(run("ACTIVITIES.find(item => item.id === 'campamentos').price"), 110);
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'bebeteca').price"), 7);
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'campamentos').price"), 100);
   assert.equal(run("VOUCHERS.length"), 4);
   assert.equal(
     run("VOUCHERS.every(v => ACTIVITIES.find(a => a.id === v.activityId).price * v.sessions > v.price)"),
     true
   );
-  assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.price)')), [45, 85, 75, 140]);
+  assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.price)')), [32, 60, 45, 85]);
 });
