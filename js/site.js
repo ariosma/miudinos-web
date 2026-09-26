@@ -8,35 +8,25 @@ const ACTIVITIES = [
     tagline: 'Primeros descubrimientos con un adulto',
     desc: 'Por las mañanas, bebés de 0 a 2 años exploran materiales, texturas y movimiento a su ritmo, siempre acompañados por un adulto. Un rato de calma para compartir y relajarse juntos.',
     minAge: 0, maxAge: 2, ages: '0–2 años · con acompañante',
-    duration: '90 min · mañanas', price: 7, priceUnit: 'bebé y acompañante',
+    duration: '90 min · mañanas', price: 10, priceUnit: 'bebé y acompañante',
     features: ['Una persona adulta acompaña al peque', 'Juego sensorial y movimiento', 'Sesión de 90 minutos'],
     days: [1, 2, 3, 4, 5], slots: ['10:00', '11:30']
   },
   {
-    id: 'ludoteca', emoji: '🧩', name: 'Ludoteca Montessori',
-    tagline: 'Juego libre en un ambiente preparado',
-    desc: 'Juego libre y propuestas a su medida, con materiales naturales y espacio para explorar y compartir.',
+    id: 'talleres', emoji: '🎨', name: 'Tardes de juego y talleres',
+    tagline: 'Juego libre y propuestas para crear',
+    desc: 'Por las tardes combinamos juego libre con propuestas de arte y experimentación para peques de 3 a 8 años. Consulta qué propuesta toca cada semana.',
     minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '2 h · tardes', price: 9, priceUnit: 'niño/a y sesión',
-    features: ['Sesión de 2 horas', 'Materiales a su altura', 'Acompañamiento respetuoso'],
-    days: [1, 2, 3, 4, 5], slots: ['16:30', '18:30'],
-    featured: true
-  },
-  {
-    id: 'talleres', emoji: '🎨', name: 'Talleres creativos',
-    tagline: 'Crear, probar y descubrir',
-    desc: 'Propuestas de arte y experimentación para peques de 3 a 8 años. Consulta qué taller toca cada semana.',
-    minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '90 min · tardes', price: 10, priceUnit: 'niño/a y taller',
-    features: ['Sesión de 90 minutos', 'Materiales incluidos', 'Temática a confirmar'],
-    days: [1, 2, 3, 4, 5], slots: ['16:30']
+    duration: '90 min · tardes', price: 16, priceUnit: 'niño/a y tarde',
+    features: ['Juego libre y talleres', 'Sesión de 90 minutos', 'Materiales incluidos'],
+    days: [1, 2, 3, 4, 5], slots: ['16:30', '18:30'], featured: true
   },
   {
     id: 'campamentos', emoji: '🏕️', name: 'Campamentos',
     tagline: 'Mañanas de vacaciones para explorar',
     desc: 'Propuesta de mañanas durante vacaciones. Pregunta por fechas, programa y plazas disponibles.',
     minAge: 3, maxAge: 8, ages: '3–8 años',
-    duration: '5 mañanas · 9:00–13:00', price: 75, priceUnit: 'niño/a y semana',
+    duration: '5 mañanas · 9:00–13:00', price: 110, priceUnit: 'niño/a y semana',
     features: ['Cinco mañanas laborables', 'Horario propuesto: 9:00–13:00', 'Fechas a confirmar'],
     days: [1, 2, 3, 4, 5], slots: ['09:00']
   },
@@ -51,8 +41,10 @@ const ACTIVITIES = [
   }
 ];
 const VOUCHERS = [
-  { sessions: 5, price: 42 },
-  { sessions: 10, price: 80 }
+  { activityId: 'bebeteca', sessions: 5, price: 45 },
+  { activityId: 'bebeteca', sessions: 10, price: 85 },
+  { activityId: 'talleres', sessions: 5, price: 75 },
+  { activityId: 'talleres', sessions: 10, price: 140 }
 ];
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -151,18 +143,20 @@ function renderVouchers() {
   const grid = $('#voucherGrid');
   grid.replaceChildren();
   for (const voucher of VOUCHERS) {
+    const offering = ACTIVITIES.find(item => item.id === voucher.activityId);
+    const period = voucher.activityId === 'bebeteca' ? 'mañanas de bebeteca' : 'tardes de juego y talleres';
     const card = document.createElement('div');
     card.className = 'voucher-card';
     const heading = document.createElement('h3');
-    heading.textContent = `🎟️ Bono ${voucher.sessions} sesiones`;
+    heading.textContent = `🎟️ ${voucher.sessions} ${period}`;
     const price = document.createElement('p');
     price.className = 'voucher-sessions';
     price.textContent = euros(voucher.price);
     const info = document.createElement('p');
-    info.textContent = 'Para ludoteca · condiciones y vigencia a confirmar con el centro.';
+    info.textContent = `${(voucher.sessions * 1.5).toLocaleString('es-ES')} horas en ${voucher.sessions} días · ahorras ${euros(offering.price * voucher.sessions - voucher.price)}. Condiciones a confirmar con el centro.`;
     const link = document.createElement('a');
     link.className = 'btn btn-ghost';
-    link.href = whatsappUrl(`Hola, quisiera consultar el bono de ${voucher.sessions} sesiones de ludoteca para un peque. ¿Podéis decirme las condiciones?`);
+    link.href = whatsappUrl(`Hola, quisiera consultar el bono de ${voucher.sessions} ${period} para un peque. ¿Podéis decirme las condiciones?`);
     link.target = '_blank';
     link.rel = 'noopener';
     link.textContent = 'Consultar bono';

@@ -353,6 +353,7 @@ p { margin: 0 0 1em; }
 }
 .voucher-sessions { font-family: var(--font-head); font-size: 2.2rem; font-weight: 700; color: var(--ink); margin: .3rem 0 .1rem; }
 .voucher-card .btn { margin-top: auto; }
+#voucherGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 900px; margin-inline: auto; }
 
 /* ---------- Reservas ---------- */
 .section-reserve { background: linear-gradient(180deg, var(--cream) 0%, #f3ecdc 100%); }
@@ -569,6 +570,7 @@ p { margin: 0 0 1em; }
     padding: 4px 4px 1rem; -webkit-overflow-scrolling: touch;
   }
   .gallery-item { scroll-snap-align: start; align-self: start; }
+  #voucherGrid { grid-template-columns: 1fr; }
   .gallery-item img { aspect-ratio: 4 / 3; object-position: center; }
   .gallery-item figcaption {
     position: static; padding: .8rem .75rem; color: var(--ink);
