@@ -41,10 +41,8 @@ const ACTIVITIES = [
   }
 ];
 const VOUCHERS = [
-  { activityId: 'bebeteca', sessions: 5, price: 32 },
-  { activityId: 'bebeteca', sessions: 10, price: 60 },
-  { activityId: 'talleres', sessions: 5, price: 45 },
-  { activityId: 'talleres', sessions: 10, price: 85 }
+  { days: 5 },
+  { days: 10 }
 ];
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -143,20 +141,18 @@ function renderVouchers() {
   const grid = $('#voucherGrid');
   grid.replaceChildren();
   for (const voucher of VOUCHERS) {
-    const offering = ACTIVITIES.find(item => item.id === voucher.activityId);
-    const period = voucher.activityId === 'bebeteca' ? 'mañanas de bebeteca' : 'tardes de juego y talleres';
     const card = document.createElement('div');
     card.className = 'voucher-card';
     const heading = document.createElement('h3');
-    heading.textContent = `🎟️ ${voucher.sessions} ${period}`;
+    heading.textContent = `🎟️ Bono de ${voucher.days} días`;
     const price = document.createElement('p');
     price.className = 'voucher-sessions';
-    price.textContent = euros(voucher.price);
+    price.textContent = 'Precio a consultar';
     const info = document.createElement('p');
-    info.textContent = `${(voucher.sessions * 1.5).toLocaleString('es-ES')} horas en ${voucher.sessions} días · ahorras ${euros(offering.price * voucher.sessions - voucher.price)}. Condiciones a confirmar con el centro.`;
+    info.textContent = 'Válido para bebeteca y juego y talleres. Consulta disponibilidad y condiciones con el centro.';
     const link = document.createElement('a');
     link.className = 'btn btn-ghost';
-    link.href = whatsappUrl(`Hola, quisiera consultar el bono de ${voucher.sessions} ${period} para un peque. ¿Podéis decirme las condiciones?`);
+    link.href = whatsappUrl(`Hola, quisiera consultar el bono de ${voucher.days} días para bebeteca y juego y talleres. ¿Podéis decirme el precio y las condiciones?`);
     link.target = '_blank';
     link.rel = 'noopener';
     link.textContent = 'Consultar bono';

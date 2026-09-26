@@ -71,14 +71,10 @@ test('weekday afternoons combine play and workshops without a separate ludoteca'
   assert.deepEqual(Array.from(run("slotsForDate('2026-09-28')")), ['16:30', '18:30']);
 });
 
-test('agreed prices and separate vouchers have a positive saving for their activity', () => {
+test('daily passes apply to both activities without an unconfirmed price', () => {
   const run = createApp();
   assert.equal(run("ACTIVITIES.find(item => item.id === 'bebeteca').price"), 7);
   assert.equal(run("ACTIVITIES.find(item => item.id === 'campamentos').price"), 100);
-  assert.equal(run("VOUCHERS.length"), 4);
-  assert.equal(
-    run("VOUCHERS.every(v => ACTIVITIES.find(a => a.id === v.activityId).price * v.sessions > v.price)"),
-    true
-  );
-  assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.price)')), [32, 60, 45, 85]);
+  assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.days)')), [5, 10]);
+  assert.equal(run('VOUCHERS.every(v => !("price" in v) && !("activityId" in v))'), true);
 });
