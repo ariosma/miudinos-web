@@ -486,8 +486,8 @@ p { margin: 0 0 1em; }
   border-radius: 999px; color: #fff; box-shadow: var(--shadow-lg); text-decoration: none;
 }
 .mobile-contact a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-.mobile-contact svg { width: 29px; height: 29px; }
-.mobile-contact-whatsapp { background: #087c43; padding: 0 1.1rem; font-weight: 700; }
+.mobile-contact svg, .mobile-contact img { width: 29px; height: 29px; }
+.mobile-contact-whatsapp { background: #087c43; width: 54px; }
 .mobile-contact a.mobile-contact-email { display: none; background: var(--terracotta-dark); width: 54px; }
 
 /* ---------- Footer ---------- */

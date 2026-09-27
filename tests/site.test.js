@@ -164,10 +164,16 @@ test('WhatsApp shortcut stays visible on all screens and opens the chat', () => 
   assert.ok(shortcut);
   assert.match(shortcut, /href="https:\/\/wa\.me\/34665369101"/);
   assert.match(shortcut, /target="_blank" rel="noopener"/);
-  assert.match(html, /<span>WhatsApp<\/span>/);
+  assert.match(shortcut, /aria-label="Abrir o chat de Miudiños en WhatsApp"/);
+  assert.match(html, /<img src="images\/whatsapp-icon\.svg" alt="" width="29" height="29">/);
+  assert.doesNotMatch(html, /<span>WhatsApp<\/span>/);
+  const icon = fs.readFileSync(path.join(__dirname, '..', 'images', 'whatsapp-icon.svg'), 'utf8');
+  assert.match(icon, /viewBox="0 0 16 16"/);
+  assert.match(icon, /fill="#fff"/);
   const globalRule = css.match(/\.mobile-contact \{([^}]+)\}/)?.[1];
   assert.match(globalRule, /position: fixed/);
   assert.match(globalRule, /display: flex/);
+  assert.match(css, /\.mobile-contact-whatsapp \{[^}]*width: 54px;/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.mobile-contact a\.mobile-contact-email \{ display: flex; \}/);
 });
 
