@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Miudiños · Centro de lecer infantil en Cee para crianzas de 0 a 8 anos. Bebeteca polas mañás, tardes de xogo e obradoiros, e aniversarios os venres. Solicita a túa praza por WhatsApp.">
+  <meta name="description" content="Miudiños · Centro de lecer infantil en Cee para crianzas de 0 a 8 anos. Bebeteca polas mañás, tardes completas de xogo e obradoiros ou horas soltas, e aniversarios os venres. Contacta por WhatsApp ou correo.">
   <title>Miudiños · Centro de lecer infantil en Cee</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/png" href="images/logo-icon.png">
@@ -46,7 +46,7 @@
       <div class="hero-blob hero-blob-b" aria-hidden="true"></div>
       <div class="container hero-inner">
         <h1 class="hero-title reveal d1">Pequenos <span class="hl hl-underline">exploradores</span>,<br>grandes descubrimentos.</h1>
-        <p class="lead hero-lead reveal d2">De luns a venres en Cee: bebeteca para os máis pequenos pola mañá; xogo libre e obradoiros de 3 a 8 anos pola tarde. E os venres, aniversarios ao seu xeito.</p>
+        <p class="lead hero-lead reveal d2">De luns a venres en Cee: bebeteca para os máis pequenos pola mañá; tardes completas ou horas soltas de xogo e obradoiros de 3 a 8 anos. E os venres, aniversarios ao seu xeito.</p>
         <div class="hero-actions reveal d3">
           <a href="#reservas" class="btn btn-primary btn-lg">Reservar unha sesión</a>
           <a href="#metodo" class="btn btn-ghost">Coñece o noso espazo</a>
@@ -122,7 +122,7 @@
         <div class="section-head">
           <p class="eyebrow">Que facemos</p>
           <h2>Actividades para cada momento</h2>
-          <p class="section-sub">Bebeteca pola mañá; tardes de xogo libre e obradoiros para os maiores; aniversarios os venres e campamentos nas vacacións.</p>
+          <p class="section-sub">Bebeteca pola mañá; tardes completas ou horas soltas de xogo e obradoiros para os maiores; aniversarios os venres e campamentos nas vacacións.</p>
         </div>
         <div class="cards-3" id="activitiesGrid"><!-- Xerado por JS --></div>
       </div>
@@ -134,7 +134,7 @@
         <div class="section-head">
           <p class="eyebrow">O noso espazo</p>
           <h2>Así é a casa de Miudiños</h2>
-          <p class="section-sub">Un espazo en Cee con materiais ao seu alcance. Desliza para percorrer as fotos no móbil e toca calquera delas para ampliala.</p>
+          <p class="section-sub">Un espazo en Cee con materiais ao seu alcance. Toca calquera foto para ampliala.</p>
         </div>
 
         <div class="gallery-grid" id="galleryGrid">
@@ -185,7 +185,7 @@
         </div>
         <div class="cards-3 pricing" id="pricingGrid"><!-- Xerado por JS --></div>
         <p class="pricing-note">Os aniversarios organízanse só os venres e o orzamento depende do grupo e da proposta. Non se cobra nada nesta web.</p>
-        <p class="pricing-note">Prezos propostos para validar co centro, non tarifas definitivas: confírmaos por WhatsApp antes de vir.</p>
+        <p class="pricing-note">Prezos orientativos: confirma as tarifas e a dispoñibilidade co centro antes de vir.</p>
       </div>
     </section>
 
@@ -194,8 +194,8 @@
       <div class="container">
         <div class="section-head">
           <p class="eyebrow">Para vir a miúdo</p>
-          <h2>Bonos por días de actividade</h2>
-          <p class="section-sub">Bonos de 5 ou 10 días, válidos tanto para a bebeteca como para o xogo e os obradoiros. Consulta o prezo e as condicións por WhatsApp; non hai compra nin pagamento en liña.</p>
+          <h2>Bonos de tardes completas</h2>
+          <p class="section-sub">Bonos de 5, 10 ou 20 tardes de xogo e obradoiros (16:30–20:00). Consulta o prezo e as condicións por WhatsApp; non hai compra nin pagamento en liña.</p>
         </div>
         <div class="cards-3" id="voucherGrid"><!-- Xerado por JS --></div>
 
@@ -215,7 +215,7 @@
           <!-- Stepper -->
           <ol class="stepper" id="stepper" aria-label="Progreso da reserva">
             <li class="step is-active" data-step="1"><span class="step-dot">1</span><span class="step-label">Actividade</span></li>
-            <li class="step" data-step="2"><span class="step-dot">2</span><span class="step-label">Data e hora</span></li>
+            <li class="step" data-step="2"><span class="step-dot">2</span><span class="step-label">Data e horario</span></li>
             <li class="step" data-step="3"><span class="step-dot">3</span><span class="step-label">Os teus datos</span></li>
             <li class="step" data-step="4"><span class="step-dot">4</span><span class="step-label">Revisar</span></li>
           </ol>
@@ -240,8 +240,8 @@
                     <p class="field-error" id="err-date" hidden>Escolle unha data dispoñible para esta actividade (dentro dos próximos 90 días).</p>
                   </div>
                   <div class="field">
-                    <label>Franxa horaria</label>
-                    <div class="slots" id="slotPicker" role="radiogroup" aria-label="Franxa horaria"></div>
+                    <label>Hora de chegada</label>
+                    <div class="slots" id="slotPicker" role="group" aria-label="Hora de inicio"></div>
                     <p class="field-error" id="err-slot" hidden>Selecciona unha hora.</p>
                   </div>
                   <div class="field">
@@ -347,6 +347,7 @@
           <ul class="contact-list">
             <li>📞 <a href="tel:+34665369101">665 369 101</a></li>
             <li>💬 <a href="https://wa.me/34665369101" target="_blank" rel="noopener">Escribir por WhatsApp</a></li>
+            <li>✉️ <a href="mailto:contacto@xn--miudios-8za.gal">contacto@miudiños.gal</a></li>
           </ul>
           <div class="map-wrap">
             <iframe
@@ -368,7 +369,8 @@
             <textarea id="ctMsg" rows="4" required></textarea>
           </div>
           <button class="btn btn-primary" type="submit">Abrir WhatsApp</button>
-          <p class="hint">A túa mensaxe non se enviará ata que premas «Enviar» dentro de WhatsApp.</p>
+          <button class="btn btn-ghost" type="button" id="contactEmail">Escribir por correo</button>
+          <p class="hint">A túa mensaxe non se enviará ata que premas «Enviar» en WhatsApp ou no teu programa de correo.</p>
         </form>
       </div>
     </section>
@@ -399,6 +401,15 @@
       <p>© 2026 Miudiños · Feito con 💛 en Galicia · Sen pagamentos en liña</p>
     </div>
   </footer>
+
+  <nav class="mobile-contact" aria-label="Contacto rápido">
+    <a class="mobile-contact-whatsapp" href="https://wa.me/34665369101" aria-label="Contactar con Miudiños por WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8 8 0 0 1-8 8 8.5 8.5 0 0 1-3.4-.8L4 20l1.3-4.5A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.3 2.8 2.1 4.6 4.9 5 .6.1 1.3-.5 1.5-1l-1.8-1-1 1c-.9-.3-1.7-1-2.1-1.9l1-1-1-1.8c-.6.1-1.3.5-1.5 1Z"/></svg>
+    </a>
+    <a class="mobile-contact-email" href="mailto:contacto@xn--miudios-8za.gal" aria-label="Contactar con Miudiños por correo electrónico">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+    </a>
+  </nav>
 
   <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

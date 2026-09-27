@@ -2,6 +2,7 @@
 'use strict';
 
 const PHONE = '34665369101';
+const EMAIL = 'contacto@xn--miudios-8za.gal';
 const ACTIVITIES = [
   {
     id: 'bebeteca', emoji: '🪁', name: 'Bebeteca',
@@ -14,12 +15,21 @@ const ACTIVITIES = [
   },
   {
     id: 'talleres', emoji: '🎨', name: 'Tardes de xogo e obradoiros',
-    tagline: 'Xogo libre e propostas para crear',
-    desc: 'Polas tardes combinamos xogo libre con propostas de arte e experimentación para peques de 3 a 8 anos. Consulta que proposta toca cada semana.',
+    tagline: 'A tarde completa para xogar e crear',
+    desc: 'De 16:30 a 20:00 combinamos xogo libre con propostas de arte e experimentación para peques de 3 a 8 anos. Consulta que proposta toca cada semana.',
     minAge: 3, maxAge: 8, ages: '3–8 anos',
-    duration: '90 min · tardes', price: 10, priceUnit: 'peque e tarde',
-    features: ['Xogo libre e obradoiros', 'Sesión de 90 minutos', 'Materiais incluídos'],
-    days: [1, 2, 3, 4, 5], slots: ['16:30', '18:30'], featured: true
+    duration: '16:30–20:00 · tarde completa', price: 15, priceUnit: 'peque e tarde',
+    features: ['Xogo libre e obradoiros', 'Tarde completa de 16:30 a 20:00', 'Materiais incluídos'],
+    days: [1, 2, 3, 4, 5], slots: ['16:30'], featured: true
+  },
+  {
+    id: 'talleres-hora', emoji: '⏱️', name: 'Hora solta de tarde',
+    tagline: 'Unha hora de xogo e obradoiros',
+    desc: 'Se prefires unha visita máis curta, reserva unha hora pola tarde para peques de 3 a 8 anos. Indica a hora de chegada na solicitude.',
+    minAge: 3, maxAge: 8, ages: '3–8 anos',
+    duration: '1 hora · entre 16:30 e 20:00', price: 8, priceUnit: 'peque e hora',
+    features: ['Xogo e obradoiros', 'Unha hora entre 16:30 e 20:00', 'Materiais incluídos'],
+    days: [1, 2, 3, 4, 5], slots: ['16:30', '17:00', '17:30', '18:00', '18:30', '19:00']
   },
   {
     id: 'campamentos', emoji: '🏕️', name: 'Campamentos',
@@ -41,8 +51,9 @@ const ACTIVITIES = [
   }
 ];
 const VOUCHERS = [
-  { days: 5 },
-  { days: 10 }
+  { sessions: 5 },
+  { sessions: 10 },
+  { sessions: 20 }
 ];
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -70,6 +81,10 @@ function euros(value) {
 
 function whatsappUrl(message) {
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+}
+
+function emailUrl(message) {
+  return `mailto:${EMAIL}?subject=${encodeURIComponent('Consulta a Miudiños')}&body=${encodeURIComponent(message)}`;
 }
 
 function openWhatsapp(message) {
@@ -144,15 +159,15 @@ function renderVouchers() {
     const card = document.createElement('div');
     card.className = 'voucher-card';
     const heading = document.createElement('h3');
-    heading.textContent = `🎟️ Bono de ${voucher.days} días`;
+    heading.textContent = `🎟️ Bono de ${voucher.sessions} tardes`;
     const price = document.createElement('p');
     price.className = 'voucher-sessions';
     price.textContent = 'Prezo por consultar';
     const info = document.createElement('p');
-    info.textContent = 'Válido para bebeteca e tardes de xogo e obradoiros. Consulta a dispoñibilidade e as condicións co centro.';
+    info.textContent = 'Para tardes completas de xogo e obradoiros (16:30–20:00). Consulta o prezo, a dispoñibilidade e as condicións co centro.';
     const link = document.createElement('a');
     link.className = 'btn btn-ghost';
-    link.href = whatsappUrl(`Ola, gustaríame consultar o bono de ${voucher.days} días para bebeteca e tardes de xogo e obradoiros. Poderiades dicirme o prezo e as condicións?`);
+    link.href = whatsappUrl(`Ola, gustaríame consultar o bono de ${voucher.sessions} tardes completas de xogo e obradoiros. Poderiades dicirme o prezo e as condicións?`);
     link.target = '_blank';
     link.rel = 'noopener';
     link.textContent = 'Consultar bono';
@@ -331,6 +346,14 @@ function agesText() {
   return booking.ages.map(age => `${age} ${age === 1 ? 'ano' : 'anos'}`).join(', ');
 }
 
+function bookingTime() {
+  if (activity().id === 'talleres') return '16:30–20:00';
+  if (activity().id !== 'talleres-hora') return booking.slot;
+  const [hours, minutes] = booking.slot.split(':').map(Number);
+  const end = `${String(hours + 1).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  return `${booking.slot}–${end}`;
+}
+
 function renderSummary() {
   const box = $('#bookingSummary');
   box.replaceChildren();
@@ -339,11 +362,11 @@ function renderSummary() {
   box.append(heading);
   summaryLine(box, 'Actividade', activity().name);
   summaryLine(box, 'Data', new Date(`${booking.date}T12:00:00`).toLocaleDateString('gl-ES', { weekday: 'long', day: 'numeric', month: 'long' }));
-  summaryLine(box, 'Hora proposta', booking.slot);
+  summaryLine(box, 'Horario proposto', bookingTime());
   summaryLine(box, 'Peques', `${booking.childName}${booking.children > 1 ? ` e ${booking.children - 1} máis` : ''} (${agesText()})`);
   summaryLine(box, 'Contacto', `${booking.name} · ${booking.phone}`);
   if (activity().price !== null) {
-    summaryLine(box, 'Prezo orientativo', `${euros(activity().price)} ${activity().id === 'campamentos' ? 'por peque e semana' : 'por peque'}`);
+    summaryLine(box, 'Prezo orientativo', `${euros(activity().price)} / ${activity().priceUnit}`);
   } else {
     summaryLine(box, 'Prezo', 'Orzamento por consultar');
   }
@@ -368,10 +391,11 @@ function sendRequest() {
     'Ola, gustaríame solicitar unha praza en Miudiños (pendente da vosa confirmación):',
     `Actividade: ${activity().name}`,
     `Data: ${booking.date}`,
-    `Hora proposta: ${booking.slot}`,
+    `Horario proposto: ${bookingTime()}`,
     `Peques: ${booking.children}; idades: ${agesText()}`,
     `Nome do peque: ${booking.childName}`,
     `Contacto: ${booking.name} · ${booking.phone}`,
+    ...(activity().price === null ? [] : [`Prezo orientativo: ${euros(activity().price)} / ${activity().priceUnit}`]),
     ...(booking.notes ? [`Comentario: ${booking.notes}`] : [])
   ];
   openWhatsapp(lines.join('\n'));
@@ -392,15 +416,25 @@ function bindNav() {
 }
 
 function bindContactForm() {
-  $('#contactForm').addEventListener('submit', event => {
-    event.preventDefault();
+  function contactMessage() {
     const name = $('#ctName').value.trim();
     const message = $('#ctMsg').value.trim();
     if (name.length < 2 || name.length > 100 || message.length < 5 || message.length > 1000) {
       toast('Revisa o teu nome e a mensaxe antes de continuar.');
-      return;
+      return null;
     }
-    openWhatsapp(`Ola, son ${name}. ${message}`);
+    return `Ola, son ${name}.\n\n${message}`;
+  }
+  $('#contactForm').addEventListener('submit', event => {
+    event.preventDefault();
+    const message = contactMessage();
+    if (message) openWhatsapp(message);
+  });
+  $('#contactEmail').addEventListener('click', () => {
+    const message = contactMessage();
+    if (message) {
+      window.location.href = emailUrl(message);
+    }
   });
 }
 

@@ -63,20 +63,28 @@ test('invalid dates are rejected and WhatsApp requests encode message text', () 
   );
 });
 
-test('weekday afternoons combine play and workshops without a separate ludoteca', () => {
+test('weekday afternoons offer a full afternoon for 15 euros and an hour for 8 euros', () => {
   const run = createApp();
   assert.equal(run("ACTIVITIES.some(item => item.id === 'ludoteca')"), false);
-  assert.equal(run("ACTIVITIES.find(item => item.id === 'talleres').price"), 10);
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'talleres').price"), 15);
+  assert.equal(run("ACTIVITIES.find(item => item.id === 'talleres-hora').price"), 8);
   run("booking.activity = 'talleres'");
-  assert.deepEqual(Array.from(run("slotsForDate('2026-09-28')")), ['16:30', '18:30']);
+  assert.deepEqual(Array.from(run("slotsForDate('2026-09-28')")), ['16:30']);
+  run("booking.slot = '16:30'");
+  assert.equal(run('bookingTime()'), '16:30–20:00');
+  run("booking.activity = 'talleres-hora'");
+  assert.deepEqual(Array.from(run("slotsForDate('2026-09-28')")), ['16:30', '17:00', '17:30', '18:00', '18:30', '19:00']);
+  run("booking.slot = '19:00'");
+  assert.equal(run('bookingTime()'), '19:00–20:00');
+  assert.equal(run("slotsForDate('2026-10-03').length"), 0);
 });
 
-test('daily passes apply to both activities without an unconfirmed price', () => {
+test('afternoon vouchers offer five, ten and twenty sessions without inventing prices', () => {
   const run = createApp();
   assert.equal(run("ACTIVITIES.find(item => item.id === 'bebeteca').price"), 7);
   assert.equal(run("ACTIVITIES.find(item => item.id === 'campamentos').price"), 100);
-  assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.days)')), [5, 10]);
-  assert.equal(run('VOUCHERS.every(v => !("price" in v) && !("activityId" in v))'), true);
+  assert.deepEqual(Array.from(run('VOUCHERS.map(v => v.sessions)')), [5, 10, 20]);
+  assert.equal(run('VOUCHERS.every(v => !("price" in v))'), true);
 });
 
 test('activity labels and WhatsApp booking request are in Galician', () => {
@@ -90,13 +98,61 @@ test('activity labels and WhatsApp booking request are in Galician', () => {
   assert.equal(url.startsWith('https://wa.me/34665369101?text='), true);
   const message = new URL(url).searchParams.get('text');
   assert.match(message, /^Ola, gustaríame solicitar unha praza/);
-  assert.match(message, /Actividade: Bebeteca\nData: 2026-09-28\nHora proposta: 10:00/);
+  assert.match(message, /Actividade: Bebeteca\nData: 2026-09-28\nHorario proposto: 10:00/);
   assert.match(message, /idades: 1 ano/);
 });
 
-test('static page sets Galician language and booking labels', () => {
+test('hourly booking request includes duration and hourly price', () => {
+  const run = createApp();
+  run("Object.assign(booking, { activity: 'talleres-hora', date: '2026-09-28', slot: '19:00', children: 1, ages: [5], childName: 'Noa', name: 'Ana', phone: '665369101', notes: '' })");
+  run('sendRequest()');
+  const message = new URL(run('window.location.href')).searchParams.get('text');
+  assert.match(message, /Horario proposto: 19:00–20:00/);
+  assert.match(message, /Prezo orientativo: 8,00\s*€ \/ peque e hora/);
+});
+
+test('email links encode the subject and body with the IDN domain', () => {
+  const run = createApp();
+  const url = run("emailUrl('Ola, son Ana. ¿Hai prazas?')");
+  assert.equal(url.startsWith('mailto:contacto@xn--miudios-8za.gal?'), true);
+  assert.equal(new URL(url).searchParams.get('subject'), 'Consulta a Miudiños');
+  assert.equal(new URL(url).searchParams.get('body'), 'Ola, son Ana. ¿Hai prazas?');
+});
+
+test('contact form opens an email draft with the entered name and message', () => {
+  const handlers = {};
+  const fields = {
+    '#ctName': { value: 'Ana' },
+    '#ctMsg': { value: 'Quería saber se hai prazas.' },
+    '#contactForm': { addEventListener(type, handler) { handlers[type] = handler; } },
+    '#contactEmail': { addEventListener(type, handler) { handlers[`email-${type}`] = handler; } }
+  };
+  const context = vm.createContext({
+    document: {
+      addEventListener() {},
+      querySelector(selector) { return fields[selector]; }
+    },
+    window: { location: {} }
+  });
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'js', 'site.js'), 'utf8'), context);
+  vm.runInContext('bindContactForm()', context);
+
+  handlers['email-click']();
+
+  const url = new URL(context.window.location.href);
+  assert.equal(url.protocol, 'mailto:');
+  assert.equal(url.searchParams.get('body'), 'Ola, son Ana.\n\nQuería saber se hai prazas.');
+});
+
+test('static page exposes Galician booking labels, afternoon vouchers and email contact', () => {
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.match(html, /<html lang="gl">/);
   assert.match(html, /<span class="step-label">Actividade<\/span>/);
   assert.match(html, /maps\?q=42\.9564872,-9\.1886793&hl=gl/);
+  assert.match(html, /Bonos de 5, 10 ou 20 tardes/);
+  assert.match(html, /contacto@miudiños\.gal/);
+  assert.match(html, /class="mobile-contact"/);
+  const css = fs.readFileSync(path.join(__dirname, '..', 'css', 'styles.css'), 'utf8');
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.gallery-item img \{ height: auto; aspect-ratio: auto; object-fit: contain; \}/);
+  assert.match(css, /\.hero-scene \{[\s\S]*?width: clamp\(720px, 130vw, 950px\)/);
 });
