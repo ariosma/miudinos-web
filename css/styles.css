@@ -477,10 +477,21 @@ p { margin: 0 0 1em; }
   display: flex; flex-direction: column; gap: 1rem;
 }
 .contact-form h3 { margin: 0; }
-.mobile-contact { display: none; }
+.mobile-contact {
+  position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 120; display: flex; flex-direction: column; align-items: flex-end; gap: .7rem;
+}
+.mobile-contact a {
+  min-height: 54px; display: flex; align-items: center; justify-content: center; gap: .55rem;
+  border-radius: 999px; color: #fff; box-shadow: var(--shadow-lg); text-decoration: none;
+}
+.mobile-contact a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.mobile-contact svg { width: 29px; height: 29px; }
+.mobile-contact-whatsapp { background: #087c43; padding: 0 1.1rem; font-weight: 700; }
+.mobile-contact a.mobile-contact-email { display: none; background: var(--terracotta-dark); width: 54px; }
 
 /* ---------- Footer ---------- */
-.site-footer { background: #463a2d; color: #e9dfd0; margin-top: 0; }
+.site-footer { background: #463a2d; color: #e9dfd0; margin-top: 0; padding-bottom: 5rem; }
 .footer-grid {
   display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem;
   padding: 3.5rem 0 2.5rem;
@@ -569,19 +580,7 @@ p { margin: 0 0 1em; }
   }
   .hero-card, .hero-scroll { display: none; }
   .hero-wave { height: 36px; }
-  .site-footer { padding-bottom: 5rem; }
-  .mobile-contact {
-    position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-    z-index: 120; display: flex; flex-direction: column; gap: .7rem;
-  }
-  .mobile-contact a {
-    width: 54px; height: 54px; display: grid; place-items: center;
-    border-radius: 50%; color: #fff; box-shadow: var(--shadow-lg);
-  }
-  .mobile-contact a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-  .mobile-contact svg { width: 29px; height: 29px; }
-  .mobile-contact-whatsapp { background: #087c43; }
-  .mobile-contact-email { background: var(--terracotta-dark); }
+  .mobile-contact a.mobile-contact-email { display: flex; }
 }
 
 /* Accesibilidad: menos animación */

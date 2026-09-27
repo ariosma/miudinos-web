@@ -156,3 +156,40 @@ test('static page exposes Galician booking labels, afternoon vouchers and email 
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.gallery-item img \{ height: auto; aspect-ratio: auto; object-fit: contain; \}/);
   assert.match(css, /\.hero-scene \{[\s\S]*?width: clamp\(720px, 130vw, 950px\)/);
 });
+
+test('WhatsApp shortcut stays visible on all screens and opens the chat', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const css = fs.readFileSync(path.join(__dirname, '..', 'css', 'styles.css'), 'utf8');
+  const shortcut = html.match(/<a class="mobile-contact-whatsapp"[^>]*>/)?.[0];
+  assert.ok(shortcut);
+  assert.match(shortcut, /href="https:\/\/wa\.me\/34665369101"/);
+  assert.match(shortcut, /target="_blank" rel="noopener"/);
+  assert.match(html, /<span>WhatsApp<\/span>/);
+  const globalRule = css.match(/\.mobile-contact \{([^}]+)\}/)?.[1];
+  assert.match(globalRule, /position: fixed/);
+  assert.match(globalRule, /display: flex/);
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.mobile-contact a\.mobile-contact-email \{ display: flex; \}/);
+});
+
+test('search metadata, local business data and sitemap refer to the published page', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  const sitemap = fs.readFileSync(path.join(__dirname, '..', 'sitemap.xml'), 'utf8');
+  const canonical = 'https://ariosma.github.io/miudinos-web/';
+  const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1]);
+
+  assert.match(html, /<html lang="gl">/);
+  assert.match(html, /<title>Miudiños \| Centro de lecer infantil en Cee/);
+  assert.match(html, /<meta name="description" content="[^"]*Cee \(A Coruña\)[^"]*">/);
+  assert.ok(html.includes(`<link rel="canonical" href="${canonical}">`));
+  assert.ok(html.includes(`<meta property="og:url" content="${canonical}">`));
+  assert.ok(html.includes(`<meta property="og:image" content="${canonical}images/galeria-sala.jpg">`));
+  assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
+  assert.equal(schema['@type'], 'LocalBusiness');
+  assert.equal(schema.url, canonical);
+  assert.equal(schema.telephone, '+34665369101');
+  assert.equal(schema.address.addressLocality, 'Cee');
+  assert.equal(schema.address.streetAddress, undefined);
+  assert.equal((sitemap.match(/<loc>/g) || []).length, 1);
+  assert.ok(sitemap.includes(`<loc>${canonical}</loc>`));
+  assert.ok(html.includes(`<link rel="sitemap" type="application/xml" href="${canonical}sitemap.xml">`));
+});
